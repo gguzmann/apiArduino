@@ -3,38 +3,40 @@ const router = express.Router();
 
 
 let count = 0;
-let temp = 0;
-let hume = 0;
-let hora = 0;
+let listaArduinos = [];
+
+let date = new Date()
+let min = date.getMinutes();
+// let hour = date.getHours() - 4;
+let hour = date.getHours();
+let fecha = `${hour}:${min}`
 
 router.get('/', (req, res) => {
     console.log('Solicitud get');
     count++;
     res.json({
-        ok: count,
-        temperatura: temp,
-        humedad: hume,
-        date: hora
+        msg: 'get',
+        fecha,
+        count,
+        listaArduinos
     })
 })
 
 router.post('/', (req, res) => {
-    const {temperatura} = req.body;
-    const {humedad} = req.body; 
-    // humedad = 1;
-    temp = temperatura;
-    hume = humedad;
-    
-    let date = new Date()
-    let min = date.getMinutes();
-    let hour = date.getHours();
-    let dateNow = `${hour}:${min}`
-    hora = dateNow;
+    const {temperatura, humedad} = req.body;
 
-    console.log("Solicitud post. temperatura:", temperatura, humedad, dateNow)
+    const info = {
+        temperatura,
+        humedad,
+        fecha: fecha
+    }
+
+    listaArduinos.push(info);
+
+    console.log("Solicitud post. temperatura:", temperatura, humedad, fecha)
     res.json({
-        ok: 'post',
-        date: dateNow
+        msg: 'post',
+        info
     })
 })
 
