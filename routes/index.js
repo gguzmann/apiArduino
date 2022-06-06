@@ -20,10 +20,10 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     const {temperatura} = req.body;
-    let {humerdad} = req.body;
+    const {humedad} = req.body; 
     // humedad = 1;
     temp = temperatura;
-    hume = humerdad;
+    hume = humedad;
     
     let date = new Date()
     let min = date.getMinutes();
